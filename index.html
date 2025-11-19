@@ -206,6 +206,7 @@
 
     <!-- Replace the script section in your HTML with this COMPLETE corrected version -->
 
+    <!-- Replace your entire <script> section with this -->
     <script>
       document
         .getElementById("form")
@@ -232,37 +233,52 @@
           submitBtn.value = "جاري المعالجة...";
           submitBtn.disabled = true;
 
-          // IMPORTANT: Replace this URL with your actual deployment URL from Google Apps Script
-          // It should look like: https://script.google.com/macros/s/AKfycby.../exec
+          // Your Google Apps Script URL
           const APPS_SCRIPT_URL =
-            "https://script.google.com/macros/s/AKfycbza9UQ8vpCEMB6bq4zpjzurH6CUGSw2hL_1Yp6IkzmXlboutT4QP-A1q0nK0w.../exec";
+            "https://script.google.com/macros/s/AKfycbza9UQ8vpCEMB6bq4zpjzurH6CUGSw2hL_1Yp6IkzmXlboutT4QP-A1q0nK0wQhBWGM/exec";
 
-          // Create form data
-          const formData = new FormData();
-          formData.append("name", name);
-          formData.append("phone", phone);
-          formData.append("service", service);
-          formData.append("appointment", appointment);
+          // Create a hidden iframe to submit the form (bypasses CORS)
+          const iframe = document.createElement("iframe");
+          iframe.style.display = "none";
+          iframe.name = "hidden_iframe";
+          document.body.appendChild(iframe);
 
-          // Send data to Google Apps Script
-          fetch(APPS_SCRIPT_URL, {
-            method: "POST",
-            body: formData,
-            // Remove mode: 'no-cors' - this was causing the issue!
-          })
-            .then((response) => response.text())
-            .then((data) => {
-              console.log("Success:", data);
-              // Redirect to thank you page
-              window.location.href = "thankyou.html";
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert("حدث خطأ، الرجاء المحاولة مرة أخرى");
-              // Reset button
-              submitBtn.value = originalText;
-              submitBtn.disabled = false;
-            });
+          // Create a form element
+          const form = document.createElement("form");
+          form.method = "POST";
+          form.action = APPS_SCRIPT_URL;
+          form.target = "hidden_iframe";
+
+          // Add form fields
+          const fields = {
+            name: name,
+            phone: phone,
+            service: service,
+            appointment: appointment,
+          };
+
+          Object.keys(fields).forEach((key) => {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = key;
+            input.value = fields[key];
+            form.appendChild(input);
+          });
+
+          // Add form to page and submit
+          document.body.appendChild(form);
+          form.submit();
+
+          // Wait 2 seconds then redirect (gives time for submission)
+          setTimeout(() => {
+            window.location.href = "thankyou.html";
+          }, 2000);
+
+          // Cleanup
+          setTimeout(() => {
+            document.body.removeChild(form);
+            document.body.removeChild(iframe);
+          }, 3000);
         });
     </script>
   </body>

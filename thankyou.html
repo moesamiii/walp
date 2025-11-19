@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>شكراً لك - مجمع الاقصى الطبي</title>
+    <link rel="icon" href="img/aqsa-logo.jpg" type="image/png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Cairo", sans-serif;
+        background: linear-gradient(135deg, #11748b 0%, #0d5268 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        max-width: 500px;
+        text-align: center;
+        animation: slideIn 0.6s ease-out;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .logo {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 30px;
+        background: #11748b;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+      }
+
+      h1 {
+        color: #11748b;
+        font-size: 32px;
+        margin-bottom: 15px;
+        font-weight: 700;
+      }
+
+      .subtitle {
+        color: #666;
+        font-size: 16px;
+        margin-bottom: 10px;
+        line-height: 1.6;
+      }
+
+      .message {
+        color: #999;
+        font-size: 14px;
+        margin-bottom: 30px;
+        line-height: 1.8;
+      }
+
+      .button-group {
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+      }
+
+      .btn {
+        padding: 12px 30px;
+        font-size: 16px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        font-family: "Cairo", sans-serif;
+      }
+
+      .btn-primary {
+        background-color: #11748b;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background-color: #0d5268;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(17, 116, 139, 0.4);
+      }
+
+      .btn-secondary {
+        background-color: #f0f0f0;
+        color: #11748b;
+      }
+
+      .btn-secondary:hover {
+        background-color: #e0e0e0;
+      }
+
+      .checkmark {
+        font-size: 60px;
+        color: #11748b;
+        margin-bottom: 20px;
+      }
+
+      .reference {
+        margin-top: 30px;
+        padding-top: 30px;
+        border-top: 1px solid #eee;
+        font-size: 12px;
+        color: #999;
+      }
+
+      .reference p {
+        margin-bottom: 8px;
+      }
+
+      .reference-value {
+        font-weight: 700;
+        color: #11748b;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="checkmark">✓</div>
+
+      <h1>شكراً لك!</h1>
+
+      <p class="subtitle">تم استقبال طلب الحجز بنجاح</p>
+
+      <p class="message">
+        سيتواصل معك فريق عيادات روضة الاقصى قريباً على رقم الهاتف المسجل لديك
+        لتأكيد موعد الحجز.
+      </p>
+
+      <div class="button-group">
+        <button
+          class="btn btn-primary"
+          onclick="window.location.href='index.html'"
+        >
+          العودة إلى الصفحة الرئيسية
+        </button>
+        <button
+          class="btn btn-secondary"
+          onclick="window.location.href='https://wa.me/966XXXXXXXX?text=مرحبا'"
+        >
+          تواصل عبر WhatsApp
+        </button>
+      </div>
+
+      <div class="reference">
+        <p>رقم المرجع:</p>
+        <p class="reference-value" id="referenceId"></p>
+        <p style="margin-top: 15px; font-size: 11px">
+          احفظ هذا الرقم للتحقق من حالة حجزك
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // Generate a unique reference ID
+      function generateReferenceId() {
+        const timestamp = Date.now().toString(36).toUpperCase();
+        const random = Math.random().toString(36).substring(2, 8).toUpperCase();
+        return `AQSA-${timestamp}-${random}`;
+      }
+
+      // Display reference ID
+      document.getElementById("referenceId").textContent =
+        generateReferenceId();
+
+      // Optional: Clear form data from localStorage
+      sessionStorage.clear();
+    </script>
+  </body>
+</html>
